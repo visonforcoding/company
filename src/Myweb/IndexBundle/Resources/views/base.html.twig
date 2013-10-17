@@ -1,0 +1,59 @@
+<!Doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+    <title>{{ pageTitle }}</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('css/images/favicon.ico') }}"/>
+    <link href="{{ asset('css/base.css') }}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}"/>
+    <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
+    {% block css %}{% endblock %}
+    {% block script %}{% endblock %}
+</head>
+<body>
+<div id="wrapper">
+    <!--header-->
+    <header>
+        <div class="shell">
+            <h1 id="logo"><a href="#">Core</a></h1>
+            <div class="contact">
+                <p class="ico phone-ico"><span></span>+132 456 789</p>
+                <p class="ico mail-ico"><span></span><a href="#">sales@core.com</a></p>
+            </div>
+        </div>
+    </header>
+    <!--end header-->
+    <!--nav-->
+    <nav id="navigation">
+        <div class="shell">
+            <ul>
+                <li class="active"><a href="#"><span></span>主页</a></li>
+                <li><a href="#"><span class="bottom-arr"></span>关于我们</a></li>
+                <li><a href="#"><span class="bottom-arr"></span>服务</a></li>
+                <li><a href="#"><span class="bottom-arr"></span>产品</a></li>
+                <li><a href="#"><span class="bottom-arr"></span>企业文化</a></li>
+                <li><a href="#"><span class="bottom-arr"></span>联系我们</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!--end nav-->
+    {% block body %}
+    {% endblock %}
+</div>
+<!-- end of wrapper -->
+<div id="footer">
+    <div class="shell">
+        <nav class="footer-nav">
+            <a href="#" class="active">HOME</a>
+            <a href="#">ABOUT</a>
+            <a href="#">SERVICES</a>
+            <a href="#">PORTFOLIO</a>
+            <a href="#">BLOG</a>
+            <a href="#">CONTACT US</a>
+        </nav>
+        <p class="copy">Copyright &copy; 2012 Design by <a href="http://chocotemplates.com" target="_blank">www.ChocoTemplates.com</a></p>
+        <div class="cl">&nbsp;</div>
+    </div>
+</div>
+</body>
+</html>

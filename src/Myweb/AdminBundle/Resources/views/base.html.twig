@@ -1,0 +1,17 @@
+<!Doctype html>
+<html>
+<head>
+    <meta chsarset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ pageTitle }}</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('bundles/mywebadmin/css/images/favicon.ico') }}"/>
+    <link href="{{ asset('bundles/mywebadmin/css/base.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('bundles/mywebadmin/js/bootstrap/css/bootstrap.css') }}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/mywebadmin/css/style.css') }}"/>
+    <script type="text/javascript" src="{{ asset('bundles/mywebadmin/js/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/mywebadmin/js/bootstrap/js/bootstrap.js') }}"></script>
+    {% block css %}{% endblock %}
+    {% block script %}{% endblock %}
+</head>
+<body class="{{bodyClass}}">{% block body %}{% endblock body%}</body>
+</html>

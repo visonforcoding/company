@@ -1,0 +1,8 @@
+myweb_admin:
+    resource: "@MywebAdminBundle/Resources/config/routing.yml"
+    prefix:   /
+
+myweb_index:
+    resource: "@MywebIndexBundle/Resources/config/routing.yml"
+    prefix:   /
+

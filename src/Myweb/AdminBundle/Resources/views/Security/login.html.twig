@@ -1,0 +1,40 @@
+{% extends "MywebAdminBundle::base.html.twig" %}
+{% set pageTitle = '管理员登录' %}
+{% set bodyClass = 'adminLogin' %}
+{% block css %}
+ <style type="text/css">
+  body{
+    background:url("{{asset('bundles/mywebadmin/images/bg.jpg')}}") repeat scroll;
+    }
+  #error-box{
+  position:absolute;
+  top:50px;
+  left:300px;
+  min-width:800px;
+      }
+  </style>
+{% endblock css %}
+{% block body %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+
+{% if error %}
+  <div id="error-box" class="alert alert-danger">
+ <button type="button" class="close" data-dismiss="alert">&times;</button>
+   {{ error|trans }}
+   </div>
+{% endif %}
+<div class="form-bg">
+<form action="{{ path("fos_user_security_check") }}" method="post">
+    <h2>后台登录</h2>
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+    <label for="username">{{ 'security.login.username'|trans }}</label>
+    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+    <label for="password">{{ 'security.login.password'|trans }}</label>
+    <input type="password" id="password" name="_password" required="required" />
+    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+</form>
+</div>
+{% endblock body %}

@@ -1,0 +1,26 @@
+{% extends "MywebAdminBundle::base.html.twig" %}
+{% set pageTitle = '管理员登录' %}
+{% set bodyClass = 'adminLogin' %}
+{% block css %}
+ <style>
+  body{
+    background:url("{{asset('bundles/mywebadmin/images/bg.jpg')}}") repeat scroll;
+  
+    }
+  </style>
+{% endblock css %}
+{% block body%}
+  <div class="form-bg">
+	<form>
+        <h2>后台登录</h2>
+        <p><input type="text" placeholder="Username"></p>
+        <p><input type="password" placeholder="Password"></p>
+        <label for="remember">
+          <input type="checkbox" id="remember" value="remember" />
+          <span>记住我</span>
+        </label>
+	   <p>  <button class="btn pull-right" type="submit">登录</button></p>
+	  <form>
+            <div class="clear"></div>
+     </div>
+{% endblock body%}
