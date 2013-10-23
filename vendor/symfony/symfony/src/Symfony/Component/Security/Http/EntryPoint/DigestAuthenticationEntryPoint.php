@@ -38,9 +38,6 @@ class DigestAuthenticationEntryPoint implements AuthenticationEntryPointInterfac
         $this->logger = $logger;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function start(Request $request, AuthenticationException $authException = null)
     {
         $expiryTime = microtime(true) + $this->nonceValiditySeconds * 1000;
@@ -65,17 +62,11 @@ class DigestAuthenticationEntryPoint implements AuthenticationEntryPointInterfac
         return $response;
     }
 
-    /**
-     * @return string
-     */
     public function getKey()
     {
         return $this->key;
     }
 
-    /**
-     * @return string
-     */
     public function getRealmName()
     {
         return $this->realmName;

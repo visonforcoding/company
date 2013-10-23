@@ -63,13 +63,10 @@ class StringUtil
         // babies (baby)
         array('sei', 3, false, true, 'y'),
 
-        // accesses (access), addresses (address), kisses (kiss)
-        array('sess', 4, true, false, 'ss'),
-
         // analyses (analysis), ellipses (ellipsis), funguses (fungus),
         // neuroses (neurosis), theses (thesis), emphases (emphasis),
         // oases (oasis), crises (crisis), houses (house), bases (base),
-        // atlases (atlas)
+        // atlases (atlas), kisses (kiss)
         array('ses', 3, true, true, array('s', 'se', 'sis')),
 
         // objectives (objective), alternative (alternatives)

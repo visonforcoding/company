@@ -14,7 +14,7 @@ namespace Symfony\Component\Form\Tests\Extension\Core\ChoiceList;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 use Symfony\Component\Form\Extension\Core\View\ChoiceView;
 
-class ChoiceListTest extends AbstractChoiceListTest
+class ChoiceListTest extends \PHPUnit_Framework_TestCase
 {
     private $obj1;
 
@@ -24,14 +24,39 @@ class ChoiceListTest extends AbstractChoiceListTest
 
     private $obj4;
 
+    private $list;
+
     protected function setUp()
     {
+        parent::setUp();
+
         $this->obj1 = new \stdClass();
         $this->obj2 = new \stdClass();
         $this->obj3 = new \stdClass();
         $this->obj4 = new \stdClass();
 
-        parent::setUp();
+        $this->list = new ChoiceList(
+            array(
+                'Group 1' => array($this->obj1, $this->obj2),
+                'Group 2' => array($this->obj3, $this->obj4),
+            ),
+            array(
+                'Group 1' => array('A', 'B'),
+                'Group 2' => array('C', 'D'),
+            ),
+            array($this->obj2, $this->obj3)
+        );
+    }
+
+    protected function tearDown()
+    {
+        parent::tearDown();
+
+        $this->obj1 = null;
+        $this->obj2 = null;
+        $this->obj3 = null;
+        $this->obj4 = null;
+        $this->list = null;
     }
 
     public function testInitArray()
@@ -94,10 +119,65 @@ class ChoiceListTest extends AbstractChoiceListTest
         ), $this->list->getRemainingViews());
     }
 
+    public function testGetIndicesForChoices()
+    {
+        $choices = array($this->obj2, $this->obj3);
+        $this->assertSame(array(1, 2), $this->list->getIndicesForChoices($choices));
+    }
+
+    public function testGetIndicesForChoicesIgnoresNonExistingChoices()
+    {
+        $choices = array($this->obj2, $this->obj3, 'foobar');
+        $this->assertSame(array(1, 2), $this->list->getIndicesForChoices($choices));
+    }
+
+    public function testGetIndicesForValues()
+    {
+        // values and indices are always the same
+        $values = array('1', '2');
+        $this->assertSame(array(1, 2), $this->list->getIndicesForValues($values));
+    }
+
+    public function testGetIndicesForValuesIgnoresNonExistingValues()
+    {
+        $values = array('1', '2', '5');
+        $this->assertSame(array(1, 2), $this->list->getIndicesForValues($values));
+    }
+
+    public function testGetChoicesForValues()
+    {
+        $values = array('1', '2');
+        $this->assertSame(array($this->obj2, $this->obj3), $this->list->getChoicesForValues($values));
+    }
+
+    public function testGetChoicesForValuesCorrectOrderingOfResult()
+    {
+        $values = array('2', '1');
+        $this->assertSame(array($this->obj3, $this->obj2), $this->list->getChoicesForValues($values));
+    }
+
+    public function testGetChoicesForValuesIgnoresNonExistingValues()
+    {
+        $values = array('1', '2', '5');
+        $this->assertSame(array($this->obj2, $this->obj3), $this->list->getChoicesForValues($values));
+    }
+
+    public function testGetValuesForChoices()
+    {
+        $choices = array($this->obj2, $this->obj3);
+        $this->assertSame(array('1', '2'), $this->list->getValuesForChoices($choices));
+    }
+
+    public function testGetValuesForChoicesIgnoresNonExistingChoices()
+    {
+        $choices = array($this->obj2, $this->obj3, 'foobar');
+        $this->assertSame(array('1', '2'), $this->list->getValuesForChoices($choices));
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testInitWithInsufficientLabels()
+    public function testNonMatchingLabels()
     {
         $this->list = new ChoiceList(
             array($this->obj1, $this->obj2),
@@ -105,7 +185,7 @@ class ChoiceListTest extends AbstractChoiceListTest
         );
     }
 
-    public function testInitWithLabelsContainingNull()
+    public function testLabelsContainingNull()
     {
         $this->list = new ChoiceList(
             array($this->obj1, $this->obj2),
@@ -116,43 +196,5 @@ class ChoiceListTest extends AbstractChoiceListTest
             array(0 => new ChoiceView($this->obj1, '0', 'A'), 1 => new ChoiceView($this->obj2, '1', null)),
             $this->list->getRemainingViews()
         );
-    }
-
-    /**
-     * @return \Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceListInterface
-     */
-    protected function createChoiceList()
-    {
-        return new ChoiceList(
-            array(
-                'Group 1' => array($this->obj1, $this->obj2),
-                'Group 2' => array($this->obj3, $this->obj4),
-            ),
-            array(
-                'Group 1' => array('A', 'B'),
-                'Group 2' => array('C', 'D'),
-            ),
-            array($this->obj2, $this->obj3)
-        );
-    }
-
-    protected function getChoices()
-    {
-        return array(0 => $this->obj1, 1 => $this->obj2, 2 => $this->obj3, 3 => $this->obj4);
-    }
-
-    protected function getLabels()
-    {
-        return array(0 => 'A', 1 => 'B', 2 => 'C', 3 => 'D');
-    }
-
-    protected function getValues()
-    {
-        return array(0 => '0', 1 => '1', 2 => '2', 3 => '3');
-    }
-
-    protected function getIndices()
-    {
-        return array(0, 1, 2, 3);
     }
 }

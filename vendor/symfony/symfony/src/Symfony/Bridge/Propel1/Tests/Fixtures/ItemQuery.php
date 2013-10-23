@@ -20,10 +20,6 @@ class ItemQuery
         'is_active'     => \PropelColumnTypes::BOOLEAN,
         'enabled'       => \PropelColumnTypes::BOOLEAN_EMU,
         'updated_at'    => \PropelColumnTypes::TIMESTAMP,
-
-        'updated_at'    => \PropelColumnTypes::TIMESTAMP,
-        'updated_at'    => \PropelColumnTypes::TIMESTAMP,
-        'updated_at'    => \PropelColumnTypes::TIMESTAMP,
     );
 
     public function getTableMap()
@@ -66,30 +62,6 @@ class ItemQuery
      */
     public function getRelations()
     {
-        // table maps
-        $authorTable = new \TableMap();
-        $authorTable->setClassName('\Foo\Author');
-
-        $resellerTable = new \TableMap();
-        $resellerTable->setClassName('\Foo\Reseller');
-
-        // relations
-        $mainAuthorRelation = new \RelationMap('MainAuthor');
-        $mainAuthorRelation->setType(\RelationMap::MANY_TO_ONE);
-        $mainAuthorRelation->setForeignTable($authorTable);
-
-        $authorRelation = new \RelationMap('Author');
-        $authorRelation->setType(\RelationMap::ONE_TO_MANY);
-        $authorRelation->setForeignTable($authorTable);
-
-        $resellerRelation = new \RelationMap('Reseller');
-        $resellerRelation->setType(\RelationMap::MANY_TO_MANY);
-        $resellerRelation->setLocalTable($resellerTable);
-
-        return array(
-            $mainAuthorRelation,
-            $authorRelation,
-            $resellerRelation
-        );
+        return array();
     }
 }

@@ -149,6 +149,24 @@ class NumberFormatterTest extends AbstractNumberFormatterTest
         $formatter->getPattern();
     }
 
+    /**
+     * @expectedException \Symfony\Component\Intl\Exception\MethodNotImplementedException
+     */
+    public function testGetSymbol()
+    {
+        $formatter = $this->getNumberFormatter('en', NumberFormatter::DECIMAL);
+        $formatter->getSymbol(null);
+    }
+
+    /**
+     * @expectedException \Symfony\Component\Intl\Exception\MethodNotImplementedException
+     */
+    public function testGetTextAttribute()
+    {
+        $formatter = $this->getNumberFormatter('en', NumberFormatter::DECIMAL);
+        $formatter->getTextAttribute(null);
+    }
+
     public function testGetErrorCode()
     {
         $formatter = $this->getNumberFormatter('en', NumberFormatter::DECIMAL);
@@ -162,6 +180,14 @@ class NumberFormatterTest extends AbstractNumberFormatterTest
     {
         $formatter = $this->getNumberFormatter('en', NumberFormatter::DECIMAL);
         $formatter->parseCurrency(null, $currency);
+    }
+
+    /**
+     * @expectedException \Symfony\Component\Intl\Exception\MethodArgumentNotImplementedException
+     */
+    public function testParseWithNotNullPositionValue()
+    {
+        parent::testParseWithNotNullPositionValue();
     }
 
     /**

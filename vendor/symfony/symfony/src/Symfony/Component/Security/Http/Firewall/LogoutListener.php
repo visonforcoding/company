@@ -20,7 +20,6 @@ use Symfony\Component\Security\Core\Exception\LogoutException;
 use Symfony\Component\Security\Http\HttpUtils;
 use Symfony\Component\Security\Http\Logout\LogoutHandlerInterface;
 use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
-use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
 /**
  * LogoutListener logout users.
@@ -37,7 +36,7 @@ class LogoutListener implements ListenerInterface
     private $csrfProvider;
 
     /**
-     * Constructor.
+     * Constructor
      *
      * @param SecurityContextInterface      $securityContext
      * @param HttpUtils                     $httpUtils       An HttpUtilsInterface instance
@@ -77,8 +76,9 @@ class LogoutListener implements ListenerInterface
      *
      * @param GetResponseEvent $event A GetResponseEvent instance
      *
-     * @throws LogoutException if the CSRF token is invalid
+     * @throws InvalidCsrfTokenException if the CSRF token is invalid
      * @throws \RuntimeException if the LogoutSuccessHandlerInterface instance does not return a response
+     * @throws LogoutException
      */
     public function handle(GetResponseEvent $event)
     {

@@ -49,7 +49,7 @@ class Twig_Parser implements Twig_ParserInterface
 
     public function getVarName()
     {
-        return sprintf('__internal_%s', hash('sha256', uniqid(mt_rand(), true), false));
+        return sprintf('__internal_%s', hash('sha1', uniqid(mt_rand(), true), false));
     }
 
     public function getFilename()
@@ -58,7 +58,11 @@ class Twig_Parser implements Twig_ParserInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Converts a token stream to a node tree.
+     *
+     * @param Twig_TokenStream $stream A token stream instance
+     *
+     * @return Twig_Node_Module A node tree
      */
     public function parse(Twig_TokenStream $stream, $test = null, $dropNeedle = false)
     {
@@ -242,7 +246,7 @@ class Twig_Parser implements Twig_ParserInterface
         return $this->blocks[$name];
     }
 
-    public function setBlock($name, Twig_Node_Block $value)
+    public function setBlock($name, $value)
     {
         $this->blocks[$name] = new Twig_Node_Body(array($value), array(), $value->getLine());
     }

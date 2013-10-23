@@ -96,19 +96,13 @@ class PropelTypeGuesserTest extends Propel1TestCase
     /**
      * @dataProvider dataProviderForGuessType
      */
-    public function testGuessType($property, $type, $confidence, $multiple = null)
+    public function testGuessType($property, $type, $confidence)
     {
         $value = $this->guesser->guessType(self::CLASS_NAME, $property);
 
         $this->assertNotNull($value);
         $this->assertEquals($type, $value->getType());
         $this->assertEquals($confidence, $value->getConfidence());
-
-        if ($type === 'model') {
-            $options = $value->getOptions();
-
-            $this->assertSame($multiple, $options['multiple']);
-        }
     }
 
     public static function dataProviderForGuessType()
@@ -120,10 +114,6 @@ class PropelTypeGuesserTest extends Propel1TestCase
             array('value',      'text',     Guess::MEDIUM_CONFIDENCE),
             array('price',      'number',   Guess::MEDIUM_CONFIDENCE),
             array('updated_at', 'datetime', Guess::HIGH_CONFIDENCE),
-
-            array('Authors',    'model',    Guess::HIGH_CONFIDENCE,     true),
-            array('Resellers',  'model',    Guess::HIGH_CONFIDENCE,     true),
-            array('MainAuthor', 'model',    Guess::HIGH_CONFIDENCE,     false),
         );
     }
 }

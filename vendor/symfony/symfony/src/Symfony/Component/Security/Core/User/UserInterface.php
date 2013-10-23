@@ -11,8 +11,6 @@
 
 namespace Symfony\Component\Security\Core\User;
 
-use Symfony\Component\Security\Core\Role\Role;
-
 /**
  * Represents the interface that all user classes must implement.
  *
@@ -66,7 +64,7 @@ interface UserInterface
      *
      * This can return null if the password was not encoded using a salt.
      *
-     * @return string|null The salt
+     * @return string The salt
      */
     public function getSalt();
 
@@ -82,6 +80,8 @@ interface UserInterface
      *
      * This is important if, at any given point, sensitive information like
      * the plain-text password is stored on this object.
+     *
+     * @return void
      */
     public function eraseCredentials();
 }

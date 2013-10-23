@@ -11,14 +11,10 @@
 
 namespace Symfony\Bridge\Doctrine\Tests;
 
-use Symfony\Bridge\Doctrine\Test\DoctrineTestHelper;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Doctrine\ORM\EntityManager;
 
-/**
- * Class DoctrineOrmTestCase
- *
- * @deprecated Deprecated as of Symfony 2.4, to be removed in Symfony 3.0.
- *             Use {@link DoctrineTestHelper} instead.
- */
 abstract class DoctrineOrmTestCase extends \PHPUnit_Framework_TestCase
 {
     protected function setUp()
@@ -37,10 +33,27 @@ abstract class DoctrineOrmTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Doctrine\ORM\EntityManager
+     * @return EntityManager
      */
-    public static function createTestEntityManager()
+    public static function createTestEntityManager($paths = array())
     {
-        return DoctrineTestHelper::createTestEntityManager();
+        if (!class_exists('PDO') || !in_array('sqlite', \PDO::getAvailableDrivers())) {
+            self::markTestSkipped('This test requires SQLite support in your environment');
+        }
+        $config = new \Doctrine\ORM\Configuration();
+        $config->setEntityNamespaces(array('SymfonyTestsDoctrine' => 'Symfony\Bridge\Doctrine\Tests\Fixtures'));
+        $config->setAutoGenerateProxyClasses(true);
+        $config->setProxyDir(\sys_get_temp_dir());
+        $config->setProxyNamespace('SymfonyTests\Doctrine');
+        $config->setMetadataDriverImpl(new AnnotationDriver(new AnnotationReader()));
+        $config->setQueryCacheImpl(new \Doctrine\Common\Cache\ArrayCache());
+        $config->setMetadataCacheImpl(new \Doctrine\Common\Cache\ArrayCache());
+
+        $params = array(
+            'driver' => 'pdo_sqlite',
+            'memory' => true,
+        );
+
+        return EntityManager::create($params, $config);
     }
 }

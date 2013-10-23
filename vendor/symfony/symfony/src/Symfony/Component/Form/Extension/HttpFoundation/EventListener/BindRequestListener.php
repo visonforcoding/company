@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @author Bernhard Schussek <bschussek@gmail.com>
  *
  * @deprecated Deprecated since version 2.3, to be removed in 3.0. Pass the
- *             Request instance to {@link Form::handleRequest()} instead.
+ *             Request instance to {@link Form::process()} instead.
  */
 class BindRequestListener implements EventSubscriberInterface
 {

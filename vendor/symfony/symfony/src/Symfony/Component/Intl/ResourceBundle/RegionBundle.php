@@ -27,7 +27,7 @@ class RegionBundle extends AbstractBundle implements RegionBundleInterface
             $locale = \Locale::getDefault();
         }
 
-        return $this->readEntry($locale, array('Countries', $country), true);
+        return $this->readEntry($locale, array('Countries', $country));
     }
 
     /**
@@ -39,7 +39,7 @@ class RegionBundle extends AbstractBundle implements RegionBundleInterface
             $locale = \Locale::getDefault();
         }
 
-        if (null === ($countries = $this->readEntry($locale, array('Countries'), true))) {
+        if (null === ($countries = $this->readEntry($locale, array('Countries')))) {
             return array();
         }
 

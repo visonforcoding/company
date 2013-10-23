@@ -6,7 +6,7 @@
    +----------------------------------------------------------------------+
    | Redistribution and use in source and binary forms, with or without   |
    | modification, are permitted provided that the conditions mentioned   |
-   | in the accompanying LICENSE file are met (BSD-3-Clause).             |
+   | in the accompanying LICENSE file are met (BSD, revised).             |
    +----------------------------------------------------------------------+
    | Author: Derick Rethans <derick@derickrethans.nl>                     |
    +----------------------------------------------------------------------+
@@ -78,6 +78,9 @@ ZEND_GET_MODULE(twig)
 
 int TWIG_ARRAY_KEY_EXISTS(zval *array, zval *key)
 {
+	zval temp;
+	int result;
+
 	if (Z_TYPE_P(array) != IS_ARRAY) {
 		return 0;
 	}
@@ -257,6 +260,7 @@ zval *TWIG_GET_STATIC_PROPERTY(zval *class, char *prop_name TSRMLS_DC)
 zval *TWIG_GET_ARRAY_ELEMENT_ZVAL(zval *class, zval *prop_name TSRMLS_DC)
 {
 	zval **tmp_zval;
+	char *tmp_name;
 
 	if (class == NULL || Z_TYPE_P(class) != IS_ARRAY) {
 		if (class != NULL && Z_TYPE_P(class) == IS_OBJECT && TWIG_INSTANCE_OF(class, zend_ce_arrayaccess TSRMLS_CC)) {
@@ -694,7 +698,7 @@ static int twig_add_property_to_class(void *pDest APPLY_TSRMLS_DC, int num_args,
 	zend_property_info *pptr = (zend_property_info *) pDest;
 	APPLY_TSRMLS_FETCH();
 
-	if (!(pptr->flags & ZEND_ACC_PUBLIC) || (pptr->flags & ZEND_ACC_STATIC)) {
+	if (!(pptr->flags & ZEND_ACC_PUBLIC)) {
 		return 0;
 	}
 
@@ -751,9 +755,7 @@ PHP_FUNCTION(twig_template_get_attributes)
 	zend_bool ignoreStrictCheck = 0;
 	int free_ret = 0;
 	zval *tmp_self_cache;
-	char *class_name = NULL;
-	zval *tmp_class;
-	char *type_name;
+
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ozz|asbb", &template, &object, &zitem, &arguments, &type, &type_len, &isDefinedTest, &ignoreStrictCheck) == FAILURE) {
 		return;
@@ -773,7 +775,7 @@ PHP_FUNCTION(twig_template_get_attributes)
 
 /*
 	// array
-	if (Twig_Template::METHOD_CALL !== $type) {
+	if (Twig_TemplateInterface::METHOD_CALL !== $type) {
 		$arrayItem = is_bool($item) || is_float($item) ? (int) $item : $item;
 
 		if ((is_array($object) && array_key_exists($arrayItem, $object))
@@ -809,7 +811,7 @@ PHP_FUNCTION(twig_template_get_attributes)
 			return;
 		}
 /*
-		if (Twig_Template::ARRAY_CALL === $type) {
+		if (Twig_TemplateInterface::ARRAY_CALL === $type) {
 			if ($isDefinedTest) {
 				return false;
 			}
@@ -829,7 +831,7 @@ PHP_FUNCTION(twig_template_get_attributes)
 				throw new Twig_Error_Runtime(sprintf('Key "%s" in object (with ArrayAccess) of type "%s" does not exist', $arrayItem, get_class($object)), -1, $this->getTemplateName());
 			} elseif (is_array($object)) {
 				throw new Twig_Error_Runtime(sprintf('Key "%s" for array with keys "%s" does not exist', $arrayItem, implode(', ', array_keys($object))), -1, $this->getTemplateName());
-			} elseif (Twig_Template::ARRAY_CALL === $type) {
+			} elseif (Twig_TemplateInterface::ARRAY_CALL === $type) {
 				throw new Twig_Error_Runtime(sprintf('Impossible to access a key ("%s") on a %s variable ("%s")', $item, gettype($object), $object), -1, $this->getTemplateName());
 			} else {
 				throw new Twig_Error_Runtime(sprintf('Impossible to access an attribute ("%s") on a %s variable ("%s")', $item, gettype($object), $object), -1, $this->getTemplateName());
@@ -878,7 +880,7 @@ PHP_FUNCTION(twig_template_get_attributes)
 			return;
 		}
 
-		type_name = zend_zval_type_name(object);
+		char *type_name = zend_zval_type_name(object);
 		Z_ADDREF_P(object);
 		convert_to_string_ex(&object);
 
@@ -891,6 +893,8 @@ PHP_FUNCTION(twig_template_get_attributes)
 /*
 	$class = get_class($object);
 */
+	char *class_name = NULL;
+	zval *tmp_class;
 
 	class_name = TWIG_GET_CLASS_NAME(object TSRMLS_CC);
 	tmp_self_cache = TWIG_GET_STATIC_PROPERTY(template, "cache" TSRMLS_CC);
@@ -904,7 +908,7 @@ PHP_FUNCTION(twig_template_get_attributes)
 
 /*
 	// object property
-	if (Twig_Template::METHOD_CALL !== $type) {
+	if (Twig_TemplateInterface::METHOD_CALL !== $type) {
 		if (isset($object->$item) || array_key_exists((string) $item, $object)) {
 			if ($isDefinedTest) {
 				return true;

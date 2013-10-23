@@ -12,7 +12,6 @@
 namespace Symfony\Component\Security\Core\Encoder;
 
 use Symfony\Component\Security\Core\Encoder\BasePasswordEncoder;
-use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
 /**
  * @author Elnur Abdurrakhimov <elnur@elnur.pro>
@@ -43,7 +42,7 @@ class BCryptPasswordEncoder extends BasePasswordEncoder
             throw new \InvalidArgumentException('Cost must be in the range of 4-31.');
         }
 
-        $this->cost = $cost;
+        $this->cost = sprintf('%02d', $cost);
     }
 
     /**
@@ -65,10 +64,6 @@ class BCryptPasswordEncoder extends BasePasswordEncoder
      */
     public function encodePassword($raw, $salt)
     {
-        if ($this->isPasswordTooLong($raw)) {
-            throw new BadCredentialsException('Invalid password.');
-        }
-
         $options = array('cost' => $this->cost);
 
         if ($salt) {
@@ -83,6 +78,6 @@ class BCryptPasswordEncoder extends BasePasswordEncoder
      */
     public function isPasswordValid($encoded, $raw, $salt)
     {
-        return !$this->isPasswordTooLong($raw) && password_verify($raw, $encoded);
+        return password_verify($raw, $encoded);
     }
 }

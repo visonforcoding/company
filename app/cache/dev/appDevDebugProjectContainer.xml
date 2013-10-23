@@ -474,10 +474,9 @@
     <parameter key="sensio_framework_extra.converter.doctrine.class">Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter</parameter>
     <parameter key="sensio_framework_extra.converter.datetime.class">Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DateTimeParamConverter</parameter>
     <parameter key="sensio_framework_extra.view.listener.class">Sensio\Bundle\FrameworkExtraBundle\EventListener\TemplateListener</parameter>
-    <parameter key="fos_user.backend_type_orm">true</parameter>
     <parameter key="fos_user.validator.password.class">FOS\UserBundle\Validator\PasswordValidator</parameter>
     <parameter key="fos_user.validator.unique.class">FOS\UserBundle\Validator\UniqueValidator</parameter>
-    <parameter key="fos_user.security.interactive_login_listener.class">FOS\UserBundle\EventListener\LastLoginListener</parameter>
+    <parameter key="fos_user.security.interactive_login_listener.class">FOS\UserBundle\Security\InteractiveLoginListener</parameter>
     <parameter key="fos_user.security.login_manager.class">FOS\UserBundle\Security\LoginManager</parameter>
     <parameter key="fos_user.resetting.email.template">FOSUserBundle:Resetting:email.txt.twig</parameter>
     <parameter key="fos_user.registration.confirmation.template">FOSUserBundle:Registration:email.txt.twig</parameter>
@@ -627,6 +626,14 @@
         </argument>
         <argument>0</argument>
       </call>
+      <call method="addListenerService">
+        <argument>security.interactive_login</argument>
+        <argument type="collection">
+          <argument>fos_user.security.interactive_login_listener</argument>
+          <argument>onSecurityInteractiveLogin</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
       <call method="addSubscriberService">
         <argument>response_listener</argument>
         <argument>Symfony\Component\HttpKernel\EventListener\ResponseListener</argument>
@@ -698,22 +705,6 @@
       <call method="addSubscriberService">
         <argument>sensio_framework_extra.cache.listener</argument>
         <argument>Sensio\Bundle\FrameworkExtraBundle\EventListener\CacheListener</argument>
-      </call>
-      <call method="addSubscriberService">
-        <argument>fos_user.security.interactive_login_listener</argument>
-        <argument>FOS\UserBundle\EventListener\LastLoginListener</argument>
-      </call>
-      <call method="addSubscriberService">
-        <argument>fos_user.listener.authentication</argument>
-        <argument>FOS\UserBundle\EventListener\AuthenticationListener</argument>
-      </call>
-      <call method="addSubscriberService">
-        <argument>fos_user.listener.flash</argument>
-        <argument>FOS\UserBundle\EventListener\FlashListener</argument>
-      </call>
-      <call method="addSubscriberService">
-        <argument>fos_user.listener.resetting</argument>
-        <argument>FOS\UserBundle\EventListener\ResettingListener</argument>
       </call>
       <call method="addSubscriberService">
         <argument>web_profiler.debug_toolbar</argument>
@@ -1538,12 +1529,6 @@
       </call>
       <call method="addResource">
         <argument>yml</argument>
-        <argument>D:\xampp\htdocs\company\vendor\friendsofsymfony\user-bundle\FOS\UserBundle/Resources/translations\FOSUserBundle.ar.yml</argument>
-        <argument>ar</argument>
-        <argument>FOSUserBundle</argument>
-      </call>
-      <call method="addResource">
-        <argument>yml</argument>
         <argument>D:\xampp\htdocs\company\vendor\friendsofsymfony\user-bundle\FOS\UserBundle/Resources/translations\FOSUserBundle.bg.yml</argument>
         <argument>bg</argument>
         <argument>FOSUserBundle</argument>
@@ -1622,12 +1607,6 @@
       </call>
       <call method="addResource">
         <argument>yml</argument>
-        <argument>D:\xampp\htdocs\company\vendor\friendsofsymfony\user-bundle\FOS\UserBundle/Resources/translations\FOSUserBundle.id.yml</argument>
-        <argument>id</argument>
-        <argument>FOSUserBundle</argument>
-      </call>
-      <call method="addResource">
-        <argument>yml</argument>
         <argument>D:\xampp\htdocs\company\vendor\friendsofsymfony\user-bundle\FOS\UserBundle/Resources/translations\FOSUserBundle.it.yml</argument>
         <argument>it</argument>
         <argument>FOSUserBundle</argument>
@@ -1654,12 +1633,6 @@
         <argument>yml</argument>
         <argument>D:\xampp\htdocs\company\vendor\friendsofsymfony\user-bundle\FOS\UserBundle/Resources/translations\FOSUserBundle.lv.yml</argument>
         <argument>lv</argument>
-        <argument>FOSUserBundle</argument>
-      </call>
-      <call method="addResource">
-        <argument>yml</argument>
-        <argument>D:\xampp\htdocs\company\vendor\friendsofsymfony\user-bundle\FOS\UserBundle/Resources/translations\FOSUserBundle.nb.yml</argument>
-        <argument>nb</argument>
         <argument>FOSUserBundle</argument>
       </call>
       <call method="addResource">
@@ -1736,32 +1709,14 @@
       </call>
       <call method="addResource">
         <argument>yml</argument>
-        <argument>D:\xampp\htdocs\company\vendor\friendsofsymfony\user-bundle\FOS\UserBundle/Resources/translations\FOSUserBundle.vi.yml</argument>
-        <argument>vi</argument>
-        <argument>FOSUserBundle</argument>
-      </call>
-      <call method="addResource">
-        <argument>yml</argument>
         <argument>D:\xampp\htdocs\company\vendor\friendsofsymfony\user-bundle\FOS\UserBundle/Resources/translations\FOSUserBundle.zh_CN.yml</argument>
         <argument>zh_CN</argument>
         <argument>FOSUserBundle</argument>
       </call>
       <call method="addResource">
         <argument>yml</argument>
-        <argument>D:\xampp\htdocs\company\vendor\friendsofsymfony\user-bundle\FOS\UserBundle/Resources/translations\validators.ar.yml</argument>
-        <argument>ar</argument>
-        <argument>validators</argument>
-      </call>
-      <call method="addResource">
-        <argument>yml</argument>
         <argument>D:\xampp\htdocs\company\vendor\friendsofsymfony\user-bundle\FOS\UserBundle/Resources/translations\validators.bg.yml</argument>
         <argument>bg</argument>
-        <argument>validators</argument>
-      </call>
-      <call method="addResource">
-        <argument>yml</argument>
-        <argument>D:\xampp\htdocs\company\vendor\friendsofsymfony\user-bundle\FOS\UserBundle/Resources/translations\validators.ca.yml</argument>
-        <argument>ca</argument>
         <argument>validators</argument>
       </call>
       <call method="addResource">
@@ -1826,12 +1781,6 @@
       </call>
       <call method="addResource">
         <argument>yml</argument>
-        <argument>D:\xampp\htdocs\company\vendor\friendsofsymfony\user-bundle\FOS\UserBundle/Resources/translations\validators.id.yml</argument>
-        <argument>id</argument>
-        <argument>validators</argument>
-      </call>
-      <call method="addResource">
-        <argument>yml</argument>
         <argument>D:\xampp\htdocs\company\vendor\friendsofsymfony\user-bundle\FOS\UserBundle/Resources/translations\validators.it.yml</argument>
         <argument>it</argument>
         <argument>validators</argument>
@@ -1856,12 +1805,6 @@
       </call>
       <call method="addResource">
         <argument>yml</argument>
-        <argument>D:\xampp\htdocs\company\vendor\friendsofsymfony\user-bundle\FOS\UserBundle/Resources/translations\validators.nb.yml</argument>
-        <argument>nb</argument>
-        <argument>validators</argument>
-      </call>
-      <call method="addResource">
-        <argument>yml</argument>
         <argument>D:\xampp\htdocs\company\vendor\friendsofsymfony\user-bundle\FOS\UserBundle/Resources/translations\validators.nl.yml</argument>
         <argument>nl</argument>
         <argument>validators</argument>
@@ -1882,12 +1825,6 @@
         <argument>yml</argument>
         <argument>D:\xampp\htdocs\company\vendor\friendsofsymfony\user-bundle\FOS\UserBundle/Resources/translations\validators.pt_BR.yml</argument>
         <argument>pt_BR</argument>
-        <argument>validators</argument>
-      </call>
-      <call method="addResource">
-        <argument>yml</argument>
-        <argument>D:\xampp\htdocs\company\vendor\friendsofsymfony\user-bundle\FOS\UserBundle/Resources/translations\validators.ro.yml</argument>
-        <argument>ro</argument>
         <argument>validators</argument>
       </call>
       <call method="addResource">
@@ -1930,12 +1867,6 @@
         <argument>yml</argument>
         <argument>D:\xampp\htdocs\company\vendor\friendsofsymfony\user-bundle\FOS\UserBundle/Resources/translations\validators.uk.yml</argument>
         <argument>uk</argument>
-        <argument>validators</argument>
-      </call>
-      <call method="addResource">
-        <argument>yml</argument>
-        <argument>D:\xampp\htdocs\company\vendor\friendsofsymfony\user-bundle\FOS\UserBundle/Resources/translations\validators.vi.yml</argument>
-        <argument>vi</argument>
         <argument>validators</argument>
       </call>
       <call method="addResource">
@@ -2694,7 +2625,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>526641fa2df5b</argument>
+            <argument>526786ca21a43</argument>
           </service>
         </argument>
       </argument>
@@ -2960,7 +2891,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>526641fa2df5b</argument>
+            <argument>526786ca21a43</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
           </service>
         </argument>
@@ -3018,6 +2949,7 @@
               </service>
             </argument>
             <argument type="service" id="security.authentication.manager"/>
+            <argument type="service" id="monolog.logger.security" on-invalid="null"/>
           </service>
         </argument>
       </argument>
@@ -3361,7 +3293,7 @@
           <argument type="service" id="service_container"/>
           <call method="addEventSubscriber">
             <argument type="service">
-              <service class="FOS\UserBundle\Doctrine\Orm\UserListener" public="false">
+              <service class="FOS\UserBundle\Entity\UserListener" public="false">
                 <tag name="doctrine.event_subscriber"/>
                 <argument type="service" id="service_container"/>
               </service>
@@ -3455,21 +3387,6 @@
                   </argument>
                   <argument>FOS\UserBundle\Entity</argument>
                 </call>
-                <call method="addDriver">
-                  <argument type="service">
-                    <service class="Doctrine\ORM\Mapping\Driver\XmlDriver">
-                      <argument type="service">
-                        <service class="Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator">
-                          <argument type="collection">
-                            <argument key="D:\xampp\htdocs\company\vendor\friendsofsymfony\user-bundle\FOS\UserBundle\Resources\config\doctrine\model">FOS\UserBundle\Model</argument>
-                          </argument>
-                          <argument>.orm.xml</argument>
-                        </service>
-                      </argument>
-                    </service>
-                  </argument>
-                  <argument>FOS\UserBundle\Model</argument>
-                </call>
               </service>
             </argument>
           </call>
@@ -3534,8 +3451,8 @@
     <service id="sensio_framework_extra.cache.listener" class="Sensio\Bundle\FrameworkExtraBundle\EventListener\CacheListener">
       <tag name="kernel.event_subscriber"/>
     </service>
-    <service id="fos_user.security.interactive_login_listener" class="FOS\UserBundle\EventListener\LastLoginListener">
-      <tag name="kernel.event_subscriber"/>
+    <service id="fos_user.security.interactive_login_listener" class="FOS\UserBundle\Security\InteractiveLoginListener">
+      <tag name="kernel.event_listener" event="security.interactive_login" method="onSecurityInteractiveLogin"/>
       <argument type="service" id="fos_user.user_manager"/>
     </service>
     <service id="fos_user.security.login_manager" class="FOS\UserBundle\Security\LoginManager">
@@ -3550,16 +3467,6 @@
     <service id="fos_user.util.user_manipulator" class="FOS\UserBundle\Util\UserManipulator">
       <argument type="service" id="fos_user.user_manager"/>
     </service>
-    <service id="fos_user.listener.authentication" class="FOS\UserBundle\EventListener\AuthenticationListener">
-      <tag name="kernel.event_subscriber"/>
-      <argument type="service" id="fos_user.security.login_manager"/>
-      <argument>main</argument>
-    </service>
-    <service id="fos_user.listener.flash" class="FOS\UserBundle\EventListener\FlashListener">
-      <tag name="kernel.event_subscriber"/>
-      <argument type="service" id="session"/>
-      <argument type="service" id="translator.default"/>
-    </service>
     <service id="fos_user.username_form_type" class="FOS\UserBundle\Form\Type\UsernameFormType">
       <tag name="form.type" alias="fos_user_username"/>
       <argument type="service">
@@ -3568,62 +3475,68 @@
         </service>
       </argument>
     </service>
-    <service id="fos_user.profile.form.factory" class="FOS\UserBundle\Form\Factory\FormFactory">
-      <argument type="service" id="form.factory"/>
+    <service id="fos_user.profile.form" class="Symfony\Component\Form\Form" factory-method="createNamed" factory-service="form.factory">
       <argument>fos_user_profile_form</argument>
       <argument>fos_user_profile</argument>
+      <argument>null</argument>
       <argument type="collection">
-        <argument>Profile</argument>
-        <argument>Default</argument>
+        <argument key="validation_groups" type="collection">
+          <argument>Profile</argument>
+          <argument>Default</argument>
+        </argument>
       </argument>
     </service>
     <service id="fos_user.profile.form.type" class="FOS\UserBundle\Form\Type\ProfileFormType">
       <tag name="form.type" alias="fos_user_profile"/>
       <argument>Myweb\AdminBundle\Entity\Admin</argument>
     </service>
-    <service id="fos_user.registration.form.factory" class="FOS\UserBundle\Form\Factory\FormFactory">
-      <argument type="service" id="form.factory"/>
+    <service id="fos_user.registration.form" class="Symfony\Component\Form\Form" factory-method="createNamed" factory-service="form.factory">
       <argument>fos_user_registration_form</argument>
       <argument>fos_user_registration</argument>
+      <argument>null</argument>
       <argument type="collection">
-        <argument>Registration</argument>
-        <argument>Default</argument>
+        <argument key="validation_groups" type="collection">
+          <argument>Registration</argument>
+          <argument>Default</argument>
+        </argument>
       </argument>
     </service>
     <service id="fos_user.registration.form.type" class="FOS\UserBundle\Form\Type\RegistrationFormType">
       <tag name="form.type" alias="fos_user_registration"/>
       <argument>Myweb\AdminBundle\Entity\Admin</argument>
     </service>
-    <service id="fos_user.change_password.form.factory" class="FOS\UserBundle\Form\Factory\FormFactory">
-      <argument type="service" id="form.factory"/>
+    <service id="fos_user.change_password.form" class="Symfony\Component\Form\Form" factory-method="createNamed" factory-service="form.factory">
       <argument>fos_user_change_password_form</argument>
       <argument>fos_user_change_password</argument>
+      <argument>null</argument>
       <argument type="collection">
-        <argument>ChangePassword</argument>
-        <argument>Default</argument>
+        <argument key="validation_groups" type="collection">
+          <argument>ChangePassword</argument>
+          <argument>Default</argument>
+        </argument>
       </argument>
     </service>
     <service id="fos_user.change_password.form.type" class="FOS\UserBundle\Form\Type\ChangePasswordFormType">
       <tag name="form.type" alias="fos_user_change_password"/>
-      <argument>Myweb\AdminBundle\Entity\Admin</argument>
     </service>
-    <service id="fos_user.resetting.form.factory" class="FOS\UserBundle\Form\Factory\FormFactory">
-      <argument type="service" id="form.factory"/>
+    <service id="fos_user.change_password.form.handler.default" class="FOS\UserBundle\Form\Handler\ChangePasswordFormHandler" scope="request">
+      <argument type="service" id="fos_user.change_password.form"/>
+      <argument type="service" id="request"/>
+      <argument type="service" id="fos_user.user_manager"/>
+    </service>
+    <service id="fos_user.resetting.form" class="Symfony\Component\Form\Form" factory-method="createNamed" factory-service="form.factory">
       <argument>fos_user_resetting_form</argument>
       <argument>fos_user_resetting</argument>
+      <argument>null</argument>
       <argument type="collection">
-        <argument>ResetPassword</argument>
-        <argument>Default</argument>
+        <argument key="validation_groups" type="collection">
+          <argument>ResetPassword</argument>
+          <argument>Default</argument>
+        </argument>
       </argument>
     </service>
     <service id="fos_user.resetting.form.type" class="FOS\UserBundle\Form\Type\ResettingFormType">
       <tag name="form.type" alias="fos_user_resetting"/>
-      <argument>Myweb\AdminBundle\Entity\Admin</argument>
-    </service>
-    <service id="fos_user.listener.resetting" class="FOS\UserBundle\EventListener\ResettingListener">
-      <tag name="kernel.event_subscriber"/>
-      <argument type="service" id="router"/>
-      <argument>86400</argument>
     </service>
     <service id="web_profiler.controller.profiler" class="Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController">
       <argument type="service" id="router" on-invalid="null"/>
@@ -4077,6 +3990,23 @@
       </argument>
       <argument>Myweb\AdminBundle\Entity\Admin</argument>
     </service>
+    <service id="fos_user.profile.form.handler" class="FOS\UserBundle\Form\Handler\ProfileFormHandler" scope="request">
+      <argument type="service" id="fos_user.profile.form"/>
+      <argument type="service" id="request"/>
+      <argument type="service" id="fos_user.user_manager"/>
+    </service>
+    <service id="fos_user.registration.form.handler" class="FOS\UserBundle\Form\Handler\RegistrationFormHandler" scope="request">
+      <argument type="service" id="fos_user.registration.form"/>
+      <argument type="service" id="request"/>
+      <argument type="service" id="fos_user.user_manager"/>
+      <argument type="service" id="fos_user.mailer"/>
+      <argument type="service" id="fos_user.util.token_generator"/>
+    </service>
+    <service id="fos_user.resetting.form.handler" class="FOS\UserBundle\Form\Handler\ResettingFormHandler" scope="request">
+      <argument type="service" id="fos_user.resetting.form"/>
+      <argument type="service" id="request"/>
+      <argument type="service" id="fos_user.user_manager"/>
+    </service>
     <service id="session.storage" alias="session.storage.native"/>
     <service id="translator" alias="translator.default"/>
     <service id="debug.templating.engine.twig" alias="templating"/>
@@ -4089,6 +4019,7 @@
     <service id="database_connection" alias="doctrine.dbal.default_connection"/>
     <service id="doctrine.orm.entity_manager" alias="doctrine.orm.default_entity_manager"/>
     <service id="fos_user.util.username_canonicalizer" alias="fos_user.util.email_canonicalizer"/>
+    <service id="fos_user.change_password.form.handler" alias="fos_user.change_password.form.handler.default"/>
     <service id="sensio.distribution.webconfigurator" alias="sensio_distribution.webconfigurator"/>
   </services>
 </container>

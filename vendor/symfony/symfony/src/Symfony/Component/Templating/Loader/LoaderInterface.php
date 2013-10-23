@@ -12,7 +12,6 @@
 namespace Symfony\Component\Templating\Loader;
 
 use Symfony\Component\Templating\TemplateReferenceInterface;
-use Symfony\Component\Templating\Storage\Storage;
 
 /**
  * LoaderInterface is the interface all loaders must implement.

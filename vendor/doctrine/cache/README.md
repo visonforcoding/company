@@ -4,7 +4,6 @@ Cache component extracted from the Doctrine Common project.
 
 ## Changelog
 
-### v1.2
+### v1.1
 
 * Added support for MongoDB as Cache Provider
-* Fix namespace version reset

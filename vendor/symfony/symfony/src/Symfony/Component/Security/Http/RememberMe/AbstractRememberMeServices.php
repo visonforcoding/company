@@ -40,7 +40,7 @@ abstract class AbstractRememberMeServices implements RememberMeServicesInterface
     private $userProviders;
 
     /**
-     * Constructor.
+     * Constructor
      *
      * @param array           $userProviders
      * @param string          $key
@@ -80,9 +80,6 @@ abstract class AbstractRememberMeServices implements RememberMeServicesInterface
         return $this->options['remember_me_parameter'];
     }
 
-    /**
-     * @return string
-     */
     public function getKey()
     {
         return $this->key;
@@ -97,7 +94,6 @@ abstract class AbstractRememberMeServices implements RememberMeServicesInterface
      * @return TokenInterface|null
      *
      * @throws CookieTheftException
-     * @throws \RuntimeException
      */
     final public function autoLogin(Request $request)
     {
@@ -223,9 +219,6 @@ abstract class AbstractRememberMeServices implements RememberMeServicesInterface
      */
     abstract protected function processAutoLoginCookie(array $cookieParts, Request $request);
 
-    /**
-     * @param Request $request
-     */
     protected function onLoginFail(Request $request)
     {
     }

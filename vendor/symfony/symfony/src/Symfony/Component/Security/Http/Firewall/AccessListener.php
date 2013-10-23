@@ -15,6 +15,7 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Http\AccessMapInterface;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -30,13 +31,15 @@ class AccessListener implements ListenerInterface
     private $accessDecisionManager;
     private $map;
     private $authManager;
+    private $logger;
 
-    public function __construct(SecurityContextInterface $context, AccessDecisionManagerInterface $accessDecisionManager, AccessMapInterface $map, AuthenticationManagerInterface $authManager)
+    public function __construct(SecurityContextInterface $context, AccessDecisionManagerInterface $accessDecisionManager, AccessMapInterface $map, AuthenticationManagerInterface $authManager, LoggerInterface $logger = null)
     {
         $this->context = $context;
         $this->accessDecisionManager = $accessDecisionManager;
         $this->map = $map;
         $this->authManager = $authManager;
+        $this->logger = $logger;
     }
 
     /**
